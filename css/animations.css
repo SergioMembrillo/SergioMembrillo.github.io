@@ -1,0 +1,112 @@
+/* ════════════════════════════════════════════════
+   PORTFOLIO CSS - Animaciones de la web
+   Autor: Sergio Membrillo Chacón
+   Descripción: Agrupo aquí todas las animaciones (keyframes)
+   para no ensuciar la hoja de estilos principal (style.css).
+   ════════════════════════════════════════════════ */
+
+/* ── 1. ANIMACIÓN DE ENTRADA (FADE-UP) ──────────────────── */
+/* Se la pongo a los elementos del Héroe para que entren "flotando" hacia arriba desde abajo cuando carga la pégina */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px); /* Empieza 40 píxeles más abajo de su sitio */
+  animation: fadeUpAnim var(--t-slow) forwards;
+}
+
+/* Con nth-child aplico un retraso progresivo para que no salgan todos los elementos a la vez, creando un efecto 'cascada' */
+.fade-up:nth-child(1) { animation-delay: 0.4s; }
+.fade-up:nth-child(2) { animation-delay: 0.6s; }
+.fade-up:nth-child(3) { animation-delay: 0.8s; }
+.fade-up:nth-child(4) { animation-delay: 1s; }
+.fade-up:nth-child(5) { animation-delay: 1.2s; }
+.fade-up:nth-child(6) { animation-delay: 1.4s; }
+
+@keyframes fadeUpAnim {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 2. ANIMACIÓN AL HACER SCROLL (REVEAL) ──────────────── */
+/* Este efecto se activa con JavaScript (Intersection Observer) cuando el apartado entra en la pantalla, añadiendo la clase '.visible' */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mismo retraso progresivo si hay varias tarjetas que aparecen de golpe en el DOM */
+.reveal:nth-child(1).visible { transition-delay: 0s; }
+.reveal:nth-child(2).visible { transition-delay: 0.15s; }
+.reveal:nth-child(3).visible { transition-delay: 0.3s; }
+.reveal:nth-child(4).visible { transition-delay: 0.45s; }
+.reveal:nth-child(5).visible { transition-delay: 0.6s; }
+.reveal:nth-child(6).visible { transition-delay: 0.75s; }
+
+/* ── 3. EFECTO GLITCH AL HACER HOVER (LOGO OPCIONAL) ─────── */
+@keyframes glitch {
+  0%   { clip-path: inset(0 0 90% 0); transform: translate(-4px, 0); }
+  10%  { clip-path: inset(20% 0 60% 0); transform: translate(4px, 0); }
+  20%  { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 0); }
+  30%  { clip-path: inset(60% 0 20% 0); transform: translate(2px, 0); }
+  40%  { clip-path: inset(80% 0 0% 0); transform: translate(-4px, 0); }
+  50%  { clip-path: inset(0 0 90% 0); transform: translate(4px, 0); }
+  100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+}
+
+/* ── 4. ANIMACIÓN DE FLOTEO ────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+.float { animation: float 4s ease-in-out infinite; }
+
+/* ── 5. BRILLO PULSANTE (GLOW PULSE) ─────────────────── */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,212,255,0.3); }
+  50%       { box-shadow: 0 0 30px rgba(0,212,255,0.7); }
+}
+
+/* ── 6. RELLENO DE BARRA DE HABILIDADES ───────────────── */
+.chip-fill.animated {
+  animation: fillBar 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+@keyframes fillBar {
+  from { width: 0% !important; }
+}
+
+/* ── 7. CONTADOR NUMÉRICO ─────────────────────────────── */
+.stat-number {
+  transition: all var(--t-slow);
+}
+
+/* ── 8. TEXTO DE RUIDO (NOISE TEXTURE) EN EL HÉROE ─────────────── */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── 9. BRILLO EN TARJETAS AL HACER HOVER ───────────────── */
+.project-card::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+  transform: scale(0);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.project-card:hover::after {
+  transform: scale(1);
+}
+.project-card { position: relative; }
